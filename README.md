@@ -1,18 +1,19 @@
 # Camera Control
-PTZOptics Camera Control Software (Electron App)
+Lumens Camera Control Software (Electron App)
 
-This project is made for the PTZOptics line of IP Cameras.
+This project is a new fork of counteragent / Camera-Control for Lumens IP cameras.
+It will be tested with the Lumens VC-A50P
 
-All the components of this project are built using web technologies. Javascript, HTML, CSS, etc. It can be used in it's basic form as Javascript, HTML, and CSS. However, it includes all the additional files necessary to create your own electron based app package.
+This project is not yet ready and is currently being coded.
 
-If you have any bugs or issues to report, please post them [here](https://github.com/counteragent/Camera-Control/issues).
+Follow these instructions to install npm on Windows:
+https://www.guru99.com/download-install-node-js.html
 
-## Building the Electron App
+Go to the project folder.  
+Type “npm install”
+Once the “package.json” is fixed for the architecture you are on (windows doesn’t have rm, etc)
+Type “npm run dist”
+That will build the project
 
-In order to build the Electron app you'll need the following:
-- GIT and Node.js: Just use [npm](http://npmjs.com), it includes both and is easiest
-- Electron: Follow the instructions found here: http://electron.atom.io/ or here: [Electron Quick Start](https://github.com/atom/electron-quick-start/blob/master/README.md#to-use)
+Look for the executable in the "dist" folder of the project.
 
-It's not required, but I found it much easier to use these packages as well:
-- [electron-packager](https://github.com/maxogden/electron-packager#installation)
-- [electron-builder](https://github.com/loopline-systems/electron-builder#install)
