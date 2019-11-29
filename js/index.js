@@ -1,6 +1,6 @@
 
-var camera_ip = "192.168.0.190";
-var base_url = "http://" + camera_ip + "/cgi-bin";
+var camera_ip = "192.168.29.229";
+var base_url = "http://" + camera_ip;
 // config defaults
 var defaults = {
     ip: camera_ip,
@@ -33,11 +33,22 @@ function save_config () {
 	console.log(config);
 }
 
+$.ajaxSetup({
+	xhrFields: {
+		withCredentials: true
+	}
+});
+
 function run_action (action_url) {
 	// $.get(url);
+	Cookies.set("userName", "admin");
+	Cookies.set("passWord", "9999");
+	Cookies.set("authority", "0");
+	Cookies.set("rememberpassword", "true");
 	$.ajax({
 		url: action_url,
 		type: 'GET',
+		contentType: "application/x-www-form-urlencoded"
 	})
 	.done(function() {
 		// console.log("success");
@@ -58,7 +69,7 @@ function config_init () {
 
 	// set the initial IP value for the camera ip input
 	$("#cam_ip").val(config.ip);
-	base_url = "http://" + config.ip + "/cgi-bin";
+	base_url = "http://" + config.ip;
 
 	// set the camera's initial configuration for each value in the saved config object
 	config_setting("flip", config.flip);
@@ -102,7 +113,7 @@ function config_init () {
 	update_labels();
 }
 
-config_init();
+// config_init();
 
 function config_setting (action, value) {
 	var loc = base_url + "/param.cgi?post_image_value&"+action+"&"+value;
@@ -394,47 +405,47 @@ function cam_pantilt (camera, action) {
 		case 'left':
 
 			if (config.invertcontrols == "1") {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&right&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?panrightstart=1&_=" + Date.now();
 			} else {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&left&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?panleftstart=1&_=" + Date.now();
 			}
 			break;
 
 		case 'right':
 
 			if (config.invertcontrols == "1") {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&left&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?panleftstart=1&_=" + Date.now();
 			} else {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&right&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?panleftstart=1&_=" + Date.now();
 			}
 			break;
 
 		case 'up':
 
 			if (config.invertcontrols == "1") {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&down&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?tiltdownstart=1&_=" + Date.now();
 			} else {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&up&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?tiltupstart=1&_=" + Date.now();
 			}
 			break;
 
 		case 'down':
 
 			if (config.invertcontrols == "1") {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&up&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?tiltupstart=1&_=" + Date.now();
 			} else {
-				var loc = base_url + "/ptzctrl.cgi?ptzcmd&down&" + config.panspeed + "&" + config.tiltspeed + "";
+				var loc = base_url + "/vb.htm?tiltdownstart=1&_=" + Date.now();
 			}
 			break;
 
 		case 'home':
 
-			var loc = base_url + "/ptzctrl.cgi?ptzcmd&home&" + config.panspeed + "&" + config.tiltspeed + "";
+			var loc = base_url + "/vb.htm?ptzgotohome=1&_=" + Date.now();
 			break;
 
 		case 'stop':
 
-			var loc = base_url + "/ptzctrl.cgi?ptzcmd&ptzstop";
+			var loc = base_url + "/vb.htm?ptstop=1&_=" + Date.now();
 			break;
 	}
 
@@ -624,7 +635,7 @@ $('body').on('mousedown', '.adjust_pantilt', function(e) {
 	clear_active_preset();
 	return false;
 });
-$('body').on('mouseup mouseout mouseleave', '.adjust_pantilt', function(e) {
+$('body').on('mouseup', '.adjust_pantilt', function(e) {
 	e.preventDefault();
 	cam_pantilt(1, 'stop');
 	return false;
@@ -638,7 +649,7 @@ $('body').on('mousedown', '.adjust_zoom', function(e) {
 	clear_active_preset();
 	return false;
 });
-$('body').on('mouseup mouseout mouseleave', '.adjust_zoom', function(e) {
+$('body').on('mouseup', '.adjust_zoom', function(e) {
 	e.preventDefault();
 	cam_zoom(1, 'zoomstop');
 	return false;
@@ -652,7 +663,7 @@ $('body').on('mousedown', '.adjust_focus', function(e) {
 	clear_active_preset();
 	return false;
 });
-$('body').on('mouseup mouseout mouseleave', '.adjust_focus', function(e) {
+$('body').on('mouseup', '.adjust_focus', function(e) {
 	e.preventDefault();
 	cam_focus(1, 'focusstop');
 	return false;
@@ -663,7 +674,7 @@ $('body').on('mousedown', '.toggle-up', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').addClass('rocker-up');
 });
-$('body').on('mouseup mouseout mouseleave', '.toggle-up', function(e) {
+$('body').on('mouseup', '.toggle-up', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').removeClass('rocker-up');
 });
@@ -672,7 +683,7 @@ $('body').on('mousedown', '.toggle-down', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').addClass('rocker-down');
 });
-$('body').on('mouseup mouseout mouseleave', '.toggle-down', function(e) {
+$('body').on('mouseup', '.toggle-down', function(e) {
 	e.preventDefault();
 	$(this).parents('.rocker').removeClass('rocker-down');
 });
