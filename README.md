@@ -6,6 +6,8 @@ It will be tested with the Lumens VC-A50P
 
 This project is not yet ready and is currently being coded.
 
+Note:  This does NOT use the Lumens C++ SDK API that allows complete control of the camera.  With this project, control of the pan, tilt and zoom speeds could not be found using the vb.htm file on the camera, and so ptz control is limited to minimum speed.  However, speed to presets is set to maximum speed.  This means that the workflow using this software would suggest using presets to get to a camera location, and ptz controls are only used to make fine adjustments to the presets during a live production.
+
 Follow these instructions to install npm on Windows:
 https://www.guru99.com/download-install-node-js.html
 
